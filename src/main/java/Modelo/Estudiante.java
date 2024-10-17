@@ -9,19 +9,19 @@ package Modelo;
  * @author steevenmendozaromero
  */
 public class Estudiante {
-    private String idEstudiante;
+    private int idEstudiante;
     private String nombre;
     private int edad;
     private String matricula;
 
-    public Estudiante(String idEstudiante, String nombre, int edad, String matricula) {
+    public Estudiante(int idEstudiante, String nombre, int edad, String matricula) {
         this.idEstudiante = idEstudiante;
         this.nombre = nombre;
         this.edad = edad;
         this.matricula = matricula;
     }
 
-    public String getIdEstudiante() {
+    public int getIdEstudiante() {
         return idEstudiante;
     }
 
@@ -37,7 +37,7 @@ public class Estudiante {
         return matricula;
     }
 
-    public void setIdEstudiante(String idEstudiante) {
+    public void setIdEstudiante(int idEstudiante) {
         this.idEstudiante = idEstudiante;
     }
 
