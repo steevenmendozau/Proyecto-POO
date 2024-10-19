@@ -29,10 +29,36 @@ public class controladorEstudiantes {
         }
     }
     
-    public void eliminarEstudiante(int idEstudiante, String nombre,int edad, String matricula)
-    {
+    public void eliminarEstudiante(int idEstudiante) {
+    File inputFile = new File(filePath);
+    File tempFile = new File("estudiantes_temp.txt");
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+         BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
         
+        String currentLine;
+        
+        while ((currentLine = reader.readLine()) != null) {
+            String[] datos = currentLine.split(";");
+            int currentIdEstudiante = Integer.parseInt(datos[0]);
+            
+            // Si el ID no es igual al que queremos eliminar, copiamos la línea al archivo temporal
+            if (currentIdEstudiante != idEstudiante) {
+                writer.write(currentLine);
+                writer.newLine();
+            }
+        }
+
+        System.out.println("Estudiante eliminado correctamente.");
+    } catch (IOException e) {
+        System.out.println("Error al eliminar el estudiante: " + e.getMessage());
     }
+
+    // Renombrar el archivo temporal
+    if (inputFile.delete()) {
+        tempFile.renameTo(inputFile);
+    }
+}
     
     public ArrayList<Estudiante> consultarEstudiantes()
     {
@@ -52,7 +78,7 @@ public class controladorEstudiantes {
         } catch (FileNotFoundException e) {
             System.out.println("No se encontró el archivo de Estudiantes.");
         } catch (IOException e) {
-            System.out.println("Error al leer las sucursales: " + e.getMessage());
+            System.out.println("Error al leer los estudiantes: " + e.getMessage());
         }
 
         return estudiantes;
