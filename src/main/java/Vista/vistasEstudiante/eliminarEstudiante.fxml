@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1">
-    
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.ControlEstudiante">
+    <children>
+        <TableView fx:id="tablaEstudiantes" layoutX="50.0" layoutY="30.0" prefWidth="400.0" prefHeight="200.0">
+            <columns>
+                <TableColumn fx:id="columnaId" text="ID" prefWidth="100.0"/>
+                <TableColumn fx:id="columnaNombre" text="Nombre" prefWidth="150.0"/>
+                <TableColumn fx:id="columnaEdad" text="Edad" prefWidth="75.0"/>
+                <TableColumn fx:id="columnaMatricula" text="Matricula" prefWidth="150.0"/>
+            </columns>
+        </TableView>
+        <Button text="Eliminar" layoutX="50.0" layoutY="250.0" onAction="#eliminarEstudiante"/>
+    </children>
 </AnchorPane>
+

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1">
-    
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.ControlEstudiante">
+    <children>
+        <TextField fx:id="txtIdEstudiante" layoutX="50.0" layoutY="30.0" promptText="ID Estudiante" />
+        <TextField fx:id="txtNombreEstudiante" layoutX="50.0" layoutY="70.0" promptText="Nombre" />
+        <TextField fx:id="txtEdadEstudiante" layoutX="50.0" layoutY="110.0" promptText="Edad" />
+        <TextField fx:id="txtMatriculaEstudiante" layoutX="50.0" layoutY="150.0" promptText="Matricula" />
+        <Button text="Agregar" layoutX="50.0" layoutY="200.0" onAction="#agregarEstudiante"/>
+    </children>
 </AnchorPane>
