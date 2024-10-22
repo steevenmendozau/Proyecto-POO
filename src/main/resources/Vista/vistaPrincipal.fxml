@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="565.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.controladorVistaPrincipal">
+   <children>
+      <Pane prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <Button fx:id="btnAdministrarEstudiantes" layoutX="48.0" layoutY="275.0" mnemonicParsing="false" onAction="#mostrarVistaEstudiantes" text="Administrar Estudiantes" />
+            <Button fx:id="btnAdministrarCursos" layoutX="222.0" layoutY="276.0" mnemonicParsing="false" onAction="#mostrarVistaCursos" text="Administrar Cursos" />
+            <ImageView fitHeight="202.0" fitWidth="457.0" layoutX="123.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Logo%20gestion%20Estudiantil.jpeg" />
+               </image>
+            </ImageView>
+            <Button layoutX="374.0" layoutY="276.0" mnemonicParsing="false" onAction="#mostrarVistaProfesores" text="Administrar Profesores" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

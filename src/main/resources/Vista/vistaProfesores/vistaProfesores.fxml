@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.controladorProfesores">
+   <children>
+      <Pane prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <TableView fx:id="tablaProfesores" prefHeight="341.0" prefWidth="600.0">
+              <columns>
+                <TableColumn fx:id="colIdProfesor" prefWidth="75.0" text="idProfesor" />
+                <TableColumn fx:id="colNombreProfesor" prefWidth="94.0" text="nombreProfesor" />
+                <TableColumn fx:id="colEspecialidad" prefWidth="94.0" text="especialidad" />
+              </columns>
+            </TableView>
+            <Button layoutX="26.0" layoutY="349.0" mnemonicParsing="false" text="Agregar Profesor" onAction="#mostrarVistaAgregarProfesor"/>
+            <Button layoutX="153.0" layoutY="350.0" mnemonicParsing="false" text="Eliminar Profesor" onAction="#mostrarVistaEliminarProfesor"/>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
