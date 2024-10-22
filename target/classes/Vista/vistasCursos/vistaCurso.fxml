@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23" fx:controller="Controladores.controladorCursos">
+    <children>
+      <Pane prefHeight="467.0" prefWidth="730.0">
+         <children>
+              <TableView fx:id="tablaCursos" layoutX="10.0" prefHeight="412.0" prefWidth="733.0">
+                  <columns>
+                      <TableColumn fx:id="colIdCurso" prefWidth="100.0" text="ID" />
+                      <TableColumn fx:id="colNombreCurso" prefWidth="150.0" text="Nombre Curso" />
+                      <TableColumn fx:id="colDescripcionCurso" prefWidth="150.0" text="Descripción" />
+                  </columns>
+              </TableView>
+            <Button layoutX="32.0" layoutY="425.0" mnemonicParsing="false" text="Agregar Curso" onAction="#mostrarVistaAgregarCurso"/>
+            <Button layoutX="193.0" layoutY="426.0" mnemonicParsing="false" text="Eliminar Curso" onAction="#mostrarVistaEliminarCurso"/>
+         </children>
+      </Pane>
+    </children>
+</AnchorPane>

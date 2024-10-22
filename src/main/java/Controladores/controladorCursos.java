@@ -1,94 +1,138 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Controladores;
 
 import Modelo.Curso;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-/**
- *
- * @author steevenmendozaromero
- */
 public class controladorCursos {
-        
-    private final String filePath = "cursos.txt";
-    
-    public void agregarCurso(int idCurso, String nombreCurso, String descripcion)
-    {
-        Curso curso = new Curso(idCurso,nombreCurso ,descripcion);
-        
-        try (FileWriter fw = new FileWriter(filePath, true);
-             BufferedWriter bw = new BufferedWriter(fw)) 
-        {
-            bw.write(idCurso + ";" + nombreCurso + ";" + descripcion);
-            bw.newLine();             
-            System.out.println("Curso guardado correctamente" + curso);
-        } catch (IOException e)
-        {
-            System.out.println("Error al guardar el estudiante" + e.getMessage());
-        }
-    }
-    
-    public void eliminarCurso(int idCurso) {
-    File inputFile = new File(filePath);
-    File tempFile = new File("cursos_temp.txt");
 
-    try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-         BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
-        
-        String currentLine;
-        
-        while ((currentLine = reader.readLine()) != null) {
-            String[] datos = currentLine.split(";");
-            int currentIdCurso = Integer.parseInt(datos[0]);
-            
-            // Si el ID no es igual al que queremos eliminar, copiamos la línea al archivo temporal
-            if (currentIdCurso != idCurso) {
-                writer.write(currentLine);
-                writer.newLine();
+    @FXML
+    private TableView<Curso> tablaCursos;
+
+    @FXML
+    private TableColumn<Curso, Integer> colIdCurso;
+
+    @FXML
+    private TableColumn<Curso, String> colNombreCurso;
+
+    @FXML
+    private TableColumn<Curso, String> colDescripcionCurso;
+
+    @FXML
+    private TextField txtIdCurso;
+
+    @FXML
+    private TextField txtNombreCurso;
+
+    @FXML
+    private TextField txtDescripcionCurso;
+
+    private ObservableList<Curso> listaCursos = FXCollections.observableArrayList();
+
+    public void initialize() {
+        colIdCurso.setCellValueFactory(new PropertyValueFactory<>("idCurso"));
+        colNombreCurso.setCellValueFactory(new PropertyValueFactory<>("nombreCurso"));
+        colDescripcionCurso.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+
+        cargarCursosDesdeArchivo("cursos.txt");
+
+        tablaCursos.setItems(listaCursos);
+    }
+
+    public ObservableList<Curso> getCursos() {
+        return listaCursos;
+    }
+
+    private void cargarCursosDesdeArchivo(String archivo) {
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] datos = linea.split(",");
+                if (datos.length == 3) { 
+                    int id = Integer.parseInt(datos[0]);
+                    String nombre = datos[1];
+                    String descripcion = datos[2];
+                    Curso curso = new Curso(id, nombre, descripcion);
+                    listaCursos.add(curso);
+                }
             }
-        }
-
-        System.out.println("Curso eliminado correctamente.");
-    } catch (IOException e) {
-        System.out.println("Error al eliminar el curso: " + e.getMessage());
-    }
-
-    // Renombrar el archivo temporal
-    if (inputFile.delete()) {
-        tempFile.renameTo(inputFile);
-    }
-}
-    
-    public ArrayList<Curso> consultarEstudiantes()
-    {
-        ArrayList<Curso> cursos = new ArrayList<>(); 
-        
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] datos = line.split(";");
-                int idCurso = Integer.parseInt(datos[0]);
-                String nombreCurso = datos[1];
-                String descripcion = datos[2];
-                cursos.add(new Curso(idCurso, nombreCurso, descripcion));
-            }
-            System.out.println("Lectura completada.");
-        } catch (FileNotFoundException e) {
-            System.out.println("No se encontró el archivo de Cursos.");
         } catch (IOException e) {
-            System.out.println("Error al leer los Cursos: " + e.getMessage());
+            mostrarAlerta("Error", "Error al cargar el archivo de cursos", "Hubo un problema al leer el archivo: " + archivo);
         }
+    }
 
-        return cursos;
+    @FXML
+    public void eliminarCurso() {
+        try {
+            int id = Integer.parseInt(txtIdCurso.getText());
+            Curso cursoAEliminar = null;
+
+            for (Curso curso : listaCursos) {
+                if (curso.getIdCurso() == id) {
+                    cursoAEliminar = curso;
+                    break;
+                }
+            }
+
+            if (cursoAEliminar != null) {
+                listaCursos.remove(cursoAEliminar);
+                mostrarAlerta("Éxito", "Curso eliminado", "El curso ha sido eliminado exitosamente.");
+            } else {
+                mostrarAlerta("Advertencia", "Curso no encontrado", "No se encontró un curso con el ID proporcionado.");
+            }
+
+        } catch (NumberFormatException e) {
+            mostrarAlerta("Error", "ID inválido", "Por favor, ingresa un ID válido.");
+        }
+    }
+
+    private void mostrarAlerta(String titulo, String encabezado, String contenido) {
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(encabezado);
+        alerta.setContentText(contenido);
+        alerta.showAndWait();
+    }
+
+    @FXML
+    public void mostrarVistaAgregarCurso() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Vista/vistasCursos/agregarCurso.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Agregar Curso");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void mostrarVistaEliminarCurso() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Vista/vistasCursos/eliminarCurso.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Eliminar Curso");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
